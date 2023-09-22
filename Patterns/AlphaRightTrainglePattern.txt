@@ -1,0 +1,16 @@
+Input: 5
+
+Output:
+A
+AB
+ABC
+ABCD
+ABCDE
+
+class Solution:
+    def printTriangle(self, n):
+        # Code here
+        for i in range(0,n):
+            for j in range(65,65+i+1):
+                print(chr(j), end='')
+            print("")

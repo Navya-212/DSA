@@ -1,0 +1,29 @@
+def reverse(a, start, end):
+    while(start<=end):
+        temp=a[start]
+        a[start]=a[end]
+        a[end]=temp
+        start+=1
+        end-=1
+
+def rotateByLeft(a,k,n):
+    reverse(a,0,k-1)
+    reverse(a,k,n-1)
+    reverse(a,0,n-1)
+    
+def rotateByRight(a,k,n):
+    reverse(a,0,n-k-1)
+    reverse(a,n-k,n-1)
+    reverse(a,0,n-1)
+    
+a = list(map(int, input().split(' ')))
+k,side= map(int, input().split(' '))
+if(side==0):
+    rotateByLeft(a,k, len(a))
+else:
+    rotateByRight(a,k,len(a))
+for i in a:
+    print(i, end=' ')
+
+#O(n), O(1)
+# side==0 is left else right

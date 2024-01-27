@@ -1,0 +1,12 @@
+def solve(a):
+    temp=a[0]
+    for i in range(len(a)-1):
+        a[i]=a[i+1]
+    a[-1]=temp
+
+a = list(map(int, input().split(' ')))
+solve(a)
+for i in a:
+    print(i, end=' ')
+
+#O(n), O(1)

@@ -1,0 +1,26 @@
+https://takeuforward.org/arrays/find-the-number-that-appears-once-and-the-other-numbers-twice/
+
+#code
+def solveWithHashMap(a):
+    hashmap={}
+    for i in a:
+        hashmap[i]=hashmap.get(i,0)+1  
+        
+    for key,value in hashmap.items():
+        if value==1:
+            return key
+            
+    return -1
+#O(N*logM) + O(M), O(M)--> M is hashmap size = (n)/2+1 and insertion into hashmap takes logM and traversing it so o(m)
+
+def solveWithXor(a):
+    res=0
+    for i in range(len(a)):
+        res=res^a[i]
+    return res
+#O(N),O(1)
+    
+        
+a = list(map(int, input().split(' ')))
+print(solveWithHashMap(a))
+print(solveWithXor(a))

@@ -1,0 +1,19 @@
+Hash Map Syntax
+
+#code
+def solve(a):
+    hashmap={}
+    for i in a:
+        hashmap[i]=hashmap.get(i,0)+1  # hashmap.get(i,0) == if ele not in map then initialising that element with value 0 
+        
+    for key,value in hashmap.items():
+        print(key,value)
+    
+    for i in a:
+        print(i,hashmap.get(i))
+    
+
+a = list(map(int, input().split(' ')))
+solve(a)
+
+

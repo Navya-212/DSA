@@ -1,0 +1,32 @@
+#code
+# can be done using hashmaps with 
+def solveWithXor(a,n):
+    xor1=0
+    xor2=0
+    for i in range(n-1):
+        xor1=xor1^(i+1)
+        xor2=xor2^a[i]
+    xor1=xor1^n
+    return xor1^xor2
+#O(N), O(1)
+    
+def solveWithMath(a,n):
+    sum=0
+    for i in a:
+        sum+=i
+    total=(n*(n+1))/2 
+    return int(total-sum)
+#O(N), O(1)
+    
+n=int(input())        
+a = list(map(int, input().split(' ')))
+print(solveWithXor(a,n))
+print(solveWithMath(a,n))
+
+'''
+testcase
+5
+1 2 3 5
+output-4
+'''
+

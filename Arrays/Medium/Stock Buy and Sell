@@ -1,0 +1,11 @@
+def SolveMaxStock(a):
+    minPrice, maxStock= float('inf'),0
+    for i in range(len(a)):
+        minPrice=min(minPrice,a[i]) 
+        maxStock=max(maxStock, a[i]-minPrice)  # as selling price index> buying price index so it is a[i]-minPrice
+    return maxStock
+    #O(N),O(1)
+
+a=list(map(int, input().split()))
+print(SolveMaxStock(a))
+

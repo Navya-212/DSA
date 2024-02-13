@@ -1,0 +1,27 @@
+def solve(a):
+    maxsum=0
+    for i in range(len(a)):
+        sum=0
+        for j in range(i,len(a)):
+            sum+=a[j]
+            maxsum=max(maxsum,sum)
+    return maxsum
+    #O(N2),O(1)
+def KadanesAlgo(a):
+    sum,maxsum,count,maxcount=0,0,0,0
+    for i in range(len(a)):
+        sum+=a[i]
+        count+=1
+        if(sum>maxsum):
+            maxsum=max(maxsum,sum)
+            maxcount=max(maxcount,count)
+        if(sum<=0):
+            sum=0
+            count=0
+    return maxsum,maxcount
+    #O(N),O(1)
+
+a=list(map(int, input().split()))
+print(solve(a))
+print(KadanesAlgo(a))
+

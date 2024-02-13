@@ -1,0 +1,25 @@
+def KadanesAlgo(a):
+    sum,maxsum,count,maxcount=0,0,0,0
+    low,high=0,0
+    for i in range(len(a)):
+        sum+=a[i]
+        count+=1
+        if(sum>maxsum):
+            maxsum=max(maxsum,sum)
+            maxcount=max(maxcount,count)
+            high=i+1 #as list is starting from 0 and we need to include a[high] so high value is increamented to 1
+        if(sum<=0):
+            sum=0
+            count=0
+    print("maxsum=",maxsum)
+    print("maxcount=",maxcount)
+    low=high-maxcount  #low and high is to determine the start and end index of the subarray
+    print("subarray is ", end='')
+    for i in range(low, high): 
+        print(a[i], end=' ')
+    
+    #O(N),O(1)
+
+a=list(map(int, input().split()))
+KadanesAlgo(a)
+

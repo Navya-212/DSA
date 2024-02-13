@@ -1,3 +1,14 @@
+def Solve(a):
+    low,maxStock,mini=0,0,float('inf')
+    for i in range(len(a)):
+        if(a[i]<mini):
+            mini=a[i]
+            low=i 
+    for i in range(low,len(a)):
+        maxStock=max(maxStock,a[i]-mini)
+    return maxStock
+    #O(N+N), O(1)
+
 def SolveMaxStock(a):
     minPrice, maxStock= float('inf'),0
     for i in range(len(a)):
@@ -7,5 +18,7 @@ def SolveMaxStock(a):
     #O(N),O(1)
 
 a=list(map(int, input().split()))
+print(Solve(a))
 print(SolveMaxStock(a))
+
 

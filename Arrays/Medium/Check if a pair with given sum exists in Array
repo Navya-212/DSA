@@ -1,0 +1,27 @@
+def SolveUsingSortingAnd2Pointer(n: int, a: [int], k: int) -> str:
+    # Write your code here.
+    a.sort()
+    l,r=0,n-1
+    while(l<r):
+        if a[l]+a[r]==k:
+            return "YES"
+        elif a[l]+a[r]>k:
+            r-=1
+        else:
+            l+=1
+    return "NO"
+    #O(n+nlogn), O(n) --> nlogn is worst and avg case tc for a.sort() and bestcase is o(1)
+
+def SolveWithHashMap(n: int, a: [int], k: int) -> str:
+    # Write your code here.
+    hashmap={}
+    temp=0
+    for i in range(n):
+        rem=k-a[i]
+        if rem in hashmap:
+            return "YES"
+        hashmap[a[i]]=i  
+    return "NO"
+    pass
+# for testcase= {1,0,0} and k=2 output will be yes if elements are added to hashmap before checking, so there are added after if rem in hashmap: this condition.
+# O(N),O(1)

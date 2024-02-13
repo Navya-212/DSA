@@ -1,0 +1,46 @@
+def sort(a):
+    c0,c1,c2=0,0,0 
+    for i in a:
+        if(i==0):
+            c0+=1 
+        elif(i==1):
+            c1+=1 
+        else:
+            c2+=1 
+    for i in range(len(a)):
+        if(i<c0):
+            a[i]=0 
+        elif(i>=c0 and i<(c1+c0)):
+            a[i]=1 
+        else:
+            a[i]=2 
+    return a
+    #O(N)+O(N),O(1)
+'''Dutch National flag algorithm. 
+
+This algorithm contains 3 pointers i.e. low, mid, and high, and 3 main rules.  The rules are the following:
+
+arr[0….low-1] contains 0. [Extreme left part]
+arr[low….mid-1] contains 1.
+arr[high+1….n-1] contains 2. [Extreme right part], n = size of the array
+'''
+def sortWithBSearch(a):
+    low,mid=0,0 
+    high=len(a)-1 
+    while(mid<=high):
+        if(a[mid]==0):
+            a[low],a[mid]=a[mid],a[low]
+            low+=1 
+            mid+=1
+        if(a[mid]==1):
+            mid+=1 
+        if(a[mid]==2):
+            a[mid],a[high]=a[high],a[mid]
+            high-=1
+    return a
+    #O(N), O(1)
+a = list(map(int, input().split(' ')))
+sort(a)
+sortWithBSearch(a)
+for i in a:
+    print(i, end=' ')

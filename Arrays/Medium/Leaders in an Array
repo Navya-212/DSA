@@ -1,0 +1,45 @@
+#code
+'''
+Problem Statement:
+Given an array, print all the elements which are leaders. A Leader is an element that is greater than all of the elements on its right side in the array.
+Input:
+ arr = [10, 22, 12, 3, 0, 6]
+Output:
+ 22 12 6
+'''
+
+def solve1(a):
+    res=[]
+    for i in range(len(a)):
+        leader=True
+        for j in range(i+1, len(a)):
+            if(a[i]<a[j]):
+                leader=False
+                break
+        if(leader):
+            res.append(a[i])
+    return res
+    #O(N2),O(N)
+
+def solve2(a):
+    n=len(a)
+    res=[]
+    res.append(a[n-1])
+    maxi=a[n-1]
+    for i in range(n-2, -1, -1):
+        if(a[i]>maxi):
+            maxi=a[i]
+            res.append(a[i])
+    res.reverse() # or newres=res[::-1]  O(N) for reversing 
+    return res
+    #O(N+N),O(N)
+'''
+--> last element will always be the leader.
+-->First, we’ll start the traversal from the right. Then, we move toward the left. Whenever we encounter a new element, we check with the greatest element obtained so far.
+-->If the current element is greater than the greatest so far, then the current element is one of the leaders and we update the greatest element.
+-->Else, we proceed with the further elements on the left. This method prints the leaders in the reverse direction of their occurrences. If we are concerned about the order, we can use an extra array or a string to order.
+'''
+
+a=list(map(int, input().split()))
+print(solve1(a))
+print(solve2(a))

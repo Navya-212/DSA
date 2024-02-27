@@ -1,0 +1,51 @@
+'''
+problem statement:
+Given an array Arr[] of integers, rearrange the numbers of the given array into the lexicographically next greater permutation of numbers.
+If such an arrangement is not possible, it must rearrange to the lowest possible order (i.e., sorted in ascending order).
+Input format: Arr[] = {2,1,5,4,3,0,0}
+Output: Arr[] = {2,3,0,0,1,4,5}
+
+Input format: Arr[] = {1,3,2}
+Output: Arr[] = {2,1,3}
+'''
+
+#code
+def next_permutation(a):
+    n=len(a)
+    #step1: finding the break point(Break-point means the first index i from the back of the given array where arr[i] becomes smaller than arr[i+1].)
+    idx=-1 
+    for i in range(n-2,-1,-1):
+        if(a[i]<a[i+1]): 
+            # (n-2> n-1) --> (n-3 >n-2) 
+            #2 1 5 4 3 0 0 --> (0>0) --> (0>3) -->(3>4)-->(4>5)-->(5>1)
+            idx=i 
+            break 
+    if(idx==-1):
+        a.revese()
+        return a 
+    #finding the immediate greater number i.e., 1> 5,4,3 but immediate greater is 3
+    for i in range(n-1,idx,-1):
+        if(a[i]>a[idx]):
+            a[idx],a[i]=a[i],a[idx] 
+            #swapping a[idx] with immediate greater i.e, 2 3 5 4 1 0 0
+            break 
+    # as the array a[idx+1:n] is in increasing order we can just reverse it to obtain smallest number
+    # 2 3 5 4 1 0 0--> 2 3 0 0 1 4 5
+    a[idx+1:]=reversed(a[idx+1:])
+    return a
+    
+a=list(map(int, input().split()))
+print(next_permutation(a))
+#O(3N),O(1)
+
+'''
+Explanation:
+1)Find the break-point, i: Break-point means the first index i from the back of the given array where arr[i] becomes smaller than arr[i+1].
+    For example, if the given array is {2,1,5,4,3,0,0}, the break-point will be index 1(0-based indexing). Here from the back of the array, index 1 is the first index where arr[1] i.e. 1 is smaller than arr[i+1] i.e. 5.
+2)To find the break-point, using a loop we will traverse the array backward and store the index i where arr[i] is less than the value at index (i+1) i.e. arr[i+1].
+    If such a break-point does not exist i.e. if the array is sorted in decreasing order, the given permutation is the last one in the sorted order of all possible permutations. So, the next permutation must be the first i.e. the permutation in increasing order.
+    So, in this case, we will reverse the whole array and will return it as our answer.
+3)If a break-point exists:
+    Find the smallest number i.e. > arr[i] and in the right half of index i(i.e. from index i+1 to n-1) and swap it with arr[i].
+    as the array a[idx+1:n]-->right half(i.e. from index i+1 to n-1) is in increasing order we can just reverse it to obtain smallest number
+'''

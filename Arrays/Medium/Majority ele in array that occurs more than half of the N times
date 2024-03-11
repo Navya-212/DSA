@@ -12,6 +12,7 @@ def MooresAlgo(a):
     for i in range(len(a)):
         if(count==0):
             ele=a[i]
+            count=1
         if(a[i]==ele):
             count+=1 
         else:

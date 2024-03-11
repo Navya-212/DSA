@@ -1,0 +1,76 @@
+'''
+problem statement:
+ Find triplets that add up to a zero
+Problem Statement: Given an array of N integers, your task is to find unique triplets that add up to give a sum of zero. In short, you need to return an array of all the unique triplets [arr[a], arr[b], arr[c]] such that i!=j, j!=k, k!=i, and their sum is equal to zero.
+Example 1: 
+
+Input: nums = [-1,0,1,2,-1,-4]
+
+Output: [[-1,-1,2],[-1,0,1]]
+
+https://takeuforward.org/data-structure/3-sum-find-triplets-that-add-up-to-a-zero/
+
+'''
+def bruteforce(a,n):
+    st=set()
+    for i in range(n):
+        for j in range(i+1,n):
+            for k in range(j+1,n):
+                if(a[i]+a[j]+a[k] == 0):
+                    temp=[a[i],a[j],a[k]]
+                    temp.sort()
+                    st.add(tuple(temp))
+    return st
+    #O(N3+logk), O(2k)--> k=no. of unique triplets
+    
+def betterApproach(a,n):
+    st=set()
+    for i in range(n):
+        hs=set()
+        for j in range(i+1,n):
+            k=0-(a[i]+a[j])
+            if k in hs:
+                temp=[a[i], a[j], k]
+                temp.sort()
+                st.add(tuple(temp))
+            hs.add(a[j])
+    return st
+    #O(N2+logk),O(2k)
+    
+def optimalApproach(a,n):
+    st=set()
+    a.sort()
+    for i in range(n):
+        # remove duplicates:
+        if i != 0 and a[i] == a[i - 1]:
+            continue
+        j,k=i+1,n-1 
+        while(j<k):
+            sum=a[i]+a[j]+a[k]
+            if(sum<0):
+                j+=1 
+            elif(sum>0):
+                k-=1 
+            else:
+                temp=[a[i],a[j],a[k]]
+                st.add(tuple(temp))
+                j+=1 
+                k-=1
+                # skip the duplicates:
+                while j < k and a[j] == a[j - 1]:
+                    j += 1
+                while j < k and a[k] == a[k + 1]:
+                    k -= 1
+    return st
+    #O(N2+NlogN),O(logk)
+
+a=list(map(int,input().split()))
+st1= bruteforce(a,len(a)) 
+for it in st1:
+    print(it, end="\n")
+st2=betterApproach(a,len(a))
+for it in st2:
+    print(it, end="\n")
+st3=optimalApproach(a,len(a))
+for it in st3:
+    print(it, end="\n")

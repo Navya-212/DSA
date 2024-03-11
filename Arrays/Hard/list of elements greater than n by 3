@@ -1,0 +1,71 @@
+'''
+Majority Elements(>N/3 times) | Find the elements that appears more than N/3 times in the array
+Problem Statement: Given an array of N integers. Find the elements that appear more than N/3 times in the array. If no such element exists, return an empty vector.
+Input Format:  N = 6, array[] = {11,33,33,11,33,11}
+Result: 11 33
+
+https://takeuforward.org/data-structure/majority-elementsn-3-times-find-the-elements-that-appears-more-than-n-3-times-in-the-array/
+
+'''
+def bruteForce(a,n):
+    res=[]
+    for i in range(n):
+        if(len(res)==0 or res[0]!=a[i]):
+            c=0
+            for j in range(i,n):
+                if(a[i]==a[j]):
+                    c+=1 
+            if(c> (n//3)):
+                res.append(a[i])
+        if(len(res) == 2):
+            break
+    return res
+    #O(N2),O(1) //O(1) as we are using a list that stores a maximum of 2 elements. The space used is so small that it can be considered constant.
+    
+def betterApproach(a,n):
+    hm={} #hashmap 
+    res=[]
+    for i in range(n):
+        hm[a[i]]= hm.get(a[i],0)+1 
+    for key, value in hm.items():
+        if(value > (n//3)):
+            res.append(key)
+    return res
+    #O(NlogN),O(N) -- logN= to insert elements into map and we're dng it for N elements 
+    
+def optimal(a,n):
+    #Moores Algo Extended version
+    c1,c2=0,0
+    e1,e2=0,0 
+    res=[]
+    for i in range(n):
+        if(c1==0 and a[i]!=e2):
+            c1=1 
+            e1=a[i]
+        elif(c2==0 and a[i]!=e1):
+            c2=1 
+            e2=a[i]
+        elif(a[i]==e1):
+            c1+=1 
+        elif(a[i]==e2):
+            c2+=1 
+        else:
+            c1-=1 
+            c2-=1
+    cnt1,cnt2=0,0
+    for i in range(n):
+        if(e1==a[i]):
+            cnt1+=1 
+        if(e2==a[i]):
+            cnt2+=1 
+    if(cnt1>(n//3)):
+        res.append(e1)
+    if(cnt2>(n//3)):
+        res.append(e2)
+    return res
+    #O(N+N), O(1)
+    
+a=list(map(int, input().split()))
+print(bruteForce(a,len(a)))
+print(betterApproach(a,len(a)))
+print(optimal(a,len(a)))

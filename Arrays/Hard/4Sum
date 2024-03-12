@@ -1,0 +1,70 @@
+'''
+Problem Statement: Given an array of N integers, your task is to find unique quads that add up to give a target value. In short, you need to return an array of all the unique quadruplets [arr[a], arr[b], arr[c], arr[d]] such that their sum is equal to a given target.
+0 <= a, b, c, d < n
+a, b, c, and d are distinct.
+arr[a] + arr[b] + arr[c] + arr[d] == target
+Input Format: arr[] = [1,0,-1,0,-2,2], target = 0
+Result: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+
+https://takeuforward.org/data-structure/4-sum-find-quads-that-add-up-to-a-target-value/
+
+'''
+def bruteForce(a,target):
+    n=len(a)
+    res=set()
+    for i in range(n):
+        for j in range(i+1,n):
+            for k in range(j+1,n):
+                for l in range(k+1,n):
+                    sum=a[i]+a[j]+a[k]+a[l]
+                    if(sum == target):
+                        temp=[a[i],a[j],a[k],a[l]]
+                        temp.sort()
+                        res.add(tuple(temp))
+    return res
+    #O(N4),O(2 * no. of the quadruplets) as we are using a set data structure and a list to store the quads.
+    
+def betterApproach(a, target):
+    n=len(a)
+    res=set()
+    for i in range(n):
+        for j in range(i+1,n):
+            st=set()
+            for k in range(j+1,n):
+                rem=target-(a[i]+a[j]+a[k])
+                if rem in st:
+                    temp=[a[i],a[j],a[k],rem]
+                    temp.sort()
+                    res.add(tuple(temp))
+                st.add(a[k])
+    return res
+    #O(N3*logM),O(2 * no. of the quadruplets) as we are using a set data structure and a list to store the quads.
+    # log M = no. of elements in set 
+
+def optimalApproach(a,target):
+    res=set()
+    a.sort()
+    n=len(a)
+    for i in range(n):
+        for j in range(i+1,n):
+            k,l= j+1,n-1
+            while(k<l):
+                sum=a[i]+a[j]+a[k]+a[l]
+                if(sum>target):
+                    l-=1 
+                elif(sum<target):
+                    k+=1 
+                else:
+                    temp=[a[i],a[j],a[k],a[l]]
+                    temp.sort()
+                    res.add(tuple(temp))
+                    k+=1 
+                    l-=1 
+    return res
+    #O(N3),O(no. of quadruplets)
+
+a=list(map(int, input().split()))
+target=int(input())
+print(bruteForce(a,target))
+print(betterApproach(a,target))
+print(optimalApproach(a,target))

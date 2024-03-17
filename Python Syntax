@@ -4,7 +4,8 @@ Hash Map Syntax
 def solve(a):
     hashmap={}
     for i in a:
-        hashmap[i]=hashmap.get(i,0)+1  # hashmap.get(i,0) == if ele not in map then initialising that element with value 0 
+        hashmap[i]=hashmap.get(i,0)+1  
+#hm.get(a[i], 0): This is a dictionary method get(). It tries to get the value associated with the key a[i] from the dictionary hm. If the key a[i] exists in hm, it returns the corresponding value. If the key doesn't exist, it returns the default value, which is 0 in this case.
         
     for key,value in hashmap.items():
         print(key,value)

@@ -1,0 +1,28 @@
+def bsearch_iterative(a,low,high,target):
+    while(low<high):
+        mid=(low+high)//2 
+        if(a[mid]== target):
+            return mid 
+        elif(a[mid] > target):
+            high=mid-1 
+        else:
+            low=mid+1 
+    return -1
+    #O(logN),O(1)
+
+def bsearch_recurrsive(a,low,high,target):
+    while(low<high):
+        mid=(low+high)//2 
+        if(a[mid]==target):
+            return mid 
+        elif(a[mid] > target):
+            return bsearch_recurrsive(a,low,mid-1,target)
+        else:
+            return bsearch_recurrsive(a,mid+1,high,target) 
+    return -1
+    #O(logN),O(1)
+    
+a=list(map(int,input().split()))
+target=int(input())
+print(bsearch_iterative(a,0,len(a)-1, target))
+print(bsearch_recurrsive(a,0,len(a)-1, target))

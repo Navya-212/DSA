@@ -1,0 +1,21 @@
+'''
+Given a sorted array of N integers and an integer x, write a program to find the lower bound of x.
+Input Format: N = 5, arr[] = {3,5,8,15,19}, x = 9
+Result: 3
+Explanation: Index 3 is the smallest index such that arr[3] >= x.
+'''
+def bsearch(a,low,high,target):
+    ans=len(a)-1
+    while(low<high):
+        mid=(low+high)//2 
+        if(a[mid]>=target ):
+            ans=mid
+            high=mid-1 #searching for lowest ele 
+        else:
+            low=mid+1
+    return ans
+    #O(logN),O(1)
+    
+a=list(map(int,input().split()))
+target=int(input())
+print(bsearch(a,0,len(a)-1, target))

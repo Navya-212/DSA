@@ -1,0 +1,77 @@
+'''
+Problem Statement: Given a sorted array arr of n integers and a target value k. Write a program to find the indices of the first and the last occurrences of the target value. If the target is not found then return -1 as indices.
+Input Format: n = 8, arr[] = {2, 4, 6, 8, 8, 8, 11, 13}, k = 8
+Result: 3 5
+Input Format: n = 8, arr[] = {2, 4, 6, 8, 8, 8, 11, 13}, k = 10
+Result: -1 -1
+'''
+def upperBound(a,n,x):
+    low,high=0,n-1
+    ans=-1
+    while(low<=high):
+        mid=(low+high)//2
+        if(a[mid]>x):
+            ans=mid 
+            high=mid-1 
+        else:
+            low=mid+1
+    return ans 
+    
+def lowerBound(a,n,x):
+    low,high=0,n-1 
+    ans=-1 
+    while(low<=high):
+        mid=(low+high)//2 
+        if(a[mid]>=x):
+            ans=mid 
+            high=mid-1 
+        else:
+            low=mid+1 
+    return ans
+    #O(2*logN),O(1)
+
+def firstOccurence(a,n,x):
+    low,high=0,n-1 
+    first=-1 
+    while(low<=high):
+        mid=(low+high)//2 
+        if(a[mid]==x):
+            first=mid 
+            high=mid-1 
+        elif(a[mid]>x):
+            high=mid-1 
+        else:
+            low=mid+1
+    return first
+    
+def lastOccurence(a,n,x):
+    low,high=0,n-1 
+    last=-1 
+    while(low<=high):
+        mid=(low+high)//2 
+        if(a[mid]==x):
+            last=mid 
+            low=mid+1 
+        elif(a[mid]>x):
+            high=mid-1 
+        else:
+            low=mid+1 
+    return last
+    #O(2*logN),O(N)
+
+
+a=list(map(int,input().split()))
+x=int(input())
+lb=lowerBound(a,len(a),x)
+ub=upperBound(a,len(a),x)
+if(lb==len(a) or a[lb]!=x):
+    print(-1,-1)
+else:
+    print(lb, ub-1)
+    
+first=firstOccurence(a,len(a),x)
+last=lastOccurence(a,len(a),x)
+if(first==-1):
+    print(-1,-1)
+else:
+    print(first,last)

@@ -1,0 +1,29 @@
+'''
+Problem Statement: Given an integer array arr of size N, sorted in ascending order (with distinct values). Now the array is rotated between 1 to N times which is unknown. Find the minimum element in the array. 
+Input Format: arr = [4,5,6,7,0,1,2,3]
+Result: 0
+'''
+import sys
+def bsearch(a,n):
+    low,high=0,n-1 
+    ans=sys.maxsize #maximum no.
+    #edge class -->If both the left and right halves of an index are sorted, it implies that the entire search space between the low and high indices is also sorted. In this case, there is no need to conduct a binary search within that segment to determine the minimum value. Instead, we can simply select the leftmost element as the minimum.
+        #The condition to check will be arr[low] <= arr[mid] && arr[mid] <= arr[high]. We can shorten this into arr[low] <= arr[high] as well.
+    if(a[low]<=a[high]):
+        ans=min(ans,a[low])
+    while(low<=high):
+        mid=(low+high)//2
+        if(a[low]<=a[mid]):
+            ans=min(ans,a[low])
+            low=mid+1 
+        else:
+            ans=min(ans,a[mid])
+            high=mid-1
+    return ans
+    #O(logN),O(1)
+
+
+a=list(map(int,input().split()))
+print(bsearch(a,len(a)))
+
+

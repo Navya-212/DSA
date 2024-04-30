@@ -1,0 +1,45 @@
+#code
+# Problem Statement: Given an integer array arr of size N, sorted in ascending order (with distinct values). Now the array is rotated between 1 to N times which is unknown. Find how many times the array has been rotated. 
+# Input Format:
+#  arr = [4,5,6,7,0,1,2,3]
+# Result:
+#  4
+def brute_Force(a):
+    ans=float('inf') #max value
+    idx=-1
+    for i in range(len(a)):
+        if(a[i] < ans):
+            ans= a[i]
+            idx= i 
+    return idx 
+    #O(N,1)
+    
+def bsearch(a):
+    n=len(a)
+    low, high= 0,n-1 
+    ans= float('inf')
+    idx=-1 
+    while(low<=high):
+        mid= (low+high)//2 
+        if(a[low]< a[high]):
+            if(a[low] < ans):
+                ans= a[low]
+                idx = low
+                break
+        if(a[low] < a[mid]):
+            if(a[low]< ans):
+                ans = a[low]
+                idx= low 
+            low= mid +1 #eliminating left half as we already got minimum 
+        else:
+            if(a[low]< ans):
+                ans =a[low]
+                idx= low 
+            high= mid-1 
+    return idx
+    #O(logN, 1)
+    
+    
+a=list(map(int, input().split()))
+print(brute_Force(a))
+print(bsearch(a))

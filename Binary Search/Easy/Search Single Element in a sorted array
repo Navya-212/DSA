@@ -1,0 +1,53 @@
+#code
+# Problem Statement: Given an array of N integers. Every number in the array except one appears twice. Find the single number in the array.
+# Input Format:
+#  arr[] = {1,1,2,2,3,3,4,5,5,6,6}
+# Result:
+#  4
+def brute_Force(a):
+    n= len(a)
+    if(n==1):
+        return a[0]
+    if(a[0] != a[1]):
+        return a[0]
+    if(a[n-1]!=a[n-2]):
+        return a[n-1]
+    for i in range(1,n-1):
+        if((a[i]!= a[i-1]) and (a[i]!=a[i+1])):
+           return a[i]
+    return -1
+    #O(N,1)
+
+def Xor(a):
+    n= len(a)
+    ans = 0
+    for i in a:
+        ans = ans^i 
+    return ans if(ans !=0) else -1 # terenary operator in python ret1 if() else ret2
+    #O(N,1)
+    
+def bsearch(a):
+    n= len(a)
+    if(n==1):
+        return a[0]
+    if(a[0] != a[1]):
+        return a[0]
+    if(a[n-1]!=a[n-2]):
+        return a[n-1]
+    low, high =1, n-2 
+    while( low <= high):
+        mid = ( low+high)//2 
+        if( (a[mid]!= a[mid-1]) and (a[mid]!= a[mid+1])):
+            return a[mid] 
+        if( (mid % 2 ==0 and a[mid]==a[mid+1]) or ( mid %2==1 and a[mid]==a[mid-1])):
+            low= mid+1 
+        else:
+            high= mid-1
+    return -1
+    #O(logN,1)
+
+
+a=list(map(int, input().split()))
+print(brute_Force(a))
+print(Xor(a))
+print(bsearch(a))

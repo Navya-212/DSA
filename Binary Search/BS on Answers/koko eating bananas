@@ -1,0 +1,62 @@
+# Problem Statement: A monkey is given ‘n’ piles of bananas, whereas the 'ith' pile has ‘a[i]’ bananas. An integer ‘h’ is also given, which denotes the time (in hours) for all the bananas to be eaten.
+
+# Each hour, the monkey chooses a non-empty pile of bananas and eats ‘k’ bananas. If the pile contains less than ‘k’ bananas, then the monkey consumes all the bananas and won’t eat any more bananas in that hour.
+
+# Find the minimum number of bananas ‘k’ to eat per hour so that the monkey can eat all the bananas within ‘h’ hours.
+
+# Example 1:
+# Input Format:
+#  N = 4, a[] = {7, 15, 6, 3}, h = 8
+# Result:
+#  5
+# Explanation:
+#  If Koko eats 5 bananas/hr, he will take 2, 3, 2, and 1 hour to eat the piles accordingly. So, he will take 8 hours to complete all the piles.  
+
+# Example 2:
+# Input Format:
+#  N = 5, a[] = {25, 12, 8, 14, 19}, h = 5
+# Result:
+#  25
+ 
+# https://takeuforward.org/binary-search/koko-eating-bananas/
+
+import math
+
+def calTime(a,k):
+    totalTime=0 
+    for i in range(len(a)):
+        totalTime+= math.ceil(a[i]/k)
+    return totalTime 
+    # returns the no. of hours it will take if we eat k no. of banans per hour
+    
+def brute_Force(a,h):
+    n= len(a)
+    maxi= max(a)
+    for i in range(1, maxi+1):
+        reqTime= calTime(a,i) 
+        # calculating time taken if we eat 1 banana per hour and 2 per hour ... till max(a)
+        if(reqTime<= h):
+            return i 
+            break
+    return max(a)
+    #O(N*max(a), 1)
+
+def bsearch(a,h):
+    n=len(a)
+    low, high= 0, max(a)
+    while(low<= high):
+        mid=(low+high)//2
+        reqTime= calTime(a,mid)
+        if(reqTime<= h):
+            high= mid- 1
+            # If reqTime <= h: On satisfying this condition, we can conclude that the number ‘mid’ is one of our possible answers. But we want the minimum number. So, we will eliminate the right half and consider the left half(i.e. high = mid-1).
+        else:
+            low=mid +1 
+    return low 
+    # O(N*log(max(a), 1)
+    
+    
+a=list(map(int, input().split()))
+h= int(input())
+print(brute_Force(a,h))
+print(bsearch(a,h))

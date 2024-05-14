@@ -1,0 +1,67 @@
+# Problem Statement: You are given 'N’ roses and you are also given an array 'arr'  where 'arr[i]'  denotes that the 'ith' rose will bloom on the 'arr[i]th' day.
+# You can only pick already bloomed roses that are adjacent to make a bouquet. You are also told that you require exactly 'k' adjacent bloomed roses to make a single bouquet.
+# Find the minimum number of days required to make at least ‘m' bouquets each containing 'k' roses. Return -1 if it is not possible.
+# Example 1:
+# Input Format:
+#  N = 8, arr[] = {7, 7, 7, 7, 13, 11, 12, 7}, m = 2, k = 3
+# Result:
+#  12
+# Explanation:
+#  On the 12th the first 4 flowers and the last 3 flowers would have already bloomed. So, we can easily make 2 bouquets, one with the first 3 and another with the last 3 flowers.
+
+# Example 2:
+# Input Format:
+#  N = 5, arr[] = {1, 10, 3, 10, 2}, m = 3, k = 2
+# Result:
+#  -1
+# Explanation:
+#  If we want to make 3 bouquets of 2 flowers each, we need at least 6 flowers. But we are given only 5 flowers, so, we cannot make the bouquets.
+
+
+# https://takeuforward.org/arrays/minimum-days-to-make-m-bouquets/
+
+def isPossible(a,day,k,m):
+    c=0 #count of no. of adjancent bloomed flowers
+    nob=0 #no. of bouquets can be made
+    for i in range(len(a)):
+        if(a[i]<=day):
+            c+=1 
+        else:
+            nob+= c//k 
+            c=0
+    nob+= c//k 
+    return (nob>=m)
+    # returns whether it is possible to make m bouquets with k flowers in d days
+def brute_Force(a,k,m):
+    n=len(a)
+    if(m*k >n):
+        return -1
+    mini, maxi= min(a), max(a)
+    for i in range(mini, maxi+1):
+        if(isPossible(a,i,k,m)):
+            return i
+    return -1
+    #  O((max(arr[])-min(arr[])+1) * N, 1)
+    
+def bsearch(a,k,m):
+    n=len(a)
+    if(m*k >n):
+        return -1 
+    low,high = min(a), max(a)
+    res=max(a)
+    while(low<=high):
+        mid=(low+high)//2 
+        if(isPossible(a,mid,k,m)):
+            res=min(res,mid)
+            high=mid-1 
+            # as we need minimum no. of days we're storing mid value and eliminating right half
+        else:
+            low=mid+1
+    return res
+    # O(log(max(arr[])-min(arr[])+1) * N, 1)
+    
+a=list(map(int, input().split()))
+k= int(input())
+m= int(input())
+print(brute_Force(a,k,m))
+print(bsearch(a,k,m))
